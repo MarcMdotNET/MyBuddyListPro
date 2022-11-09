@@ -1,10 +1,10 @@
 ﻿@model MyBuddyListPro.Models.Contact
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Contact";
 }
 
-<h1>EDIT CONTACT</h1>
+<h1>@ViewData["Title"]</h1>
 <div class="p-3 border border-2 shadow-lg bg-light">
     <form asp-action="Create" asp-controller="Contacts" enctype="multipart/form-data">
         <div class="row g-3 p-2">
@@ -57,8 +57,8 @@
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="col-12 col-lg-4 mt-2">
-                        <label asp-for="USState" class="control-label"></label>
-                        <select asp-for="USState" class="form-control"></select>
+                        <label asp-for="USState" class="control-label">State</label>
+                        <select asp-for="USState" class="form-control" asp-items="ViewBag.USStatesList"></select>
                         <span asp-validation-for="USState" class="text-danger"></span>
                     </div>
                     <div class="col-12 col-lg-2 mt-2">
