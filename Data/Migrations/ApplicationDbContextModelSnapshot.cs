@@ -34,7 +34,7 @@ namespace MyBuddyListPro.Data.Migrations
 
                     b.HasIndex("ContactsId");
 
-                    b.ToTable("CategoryContact");
+                    b.ToTable("CategoryContact", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -267,7 +267,7 @@ namespace MyBuddyListPro.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("MyBuddyListPro.Models.Contact", b =>
@@ -333,7 +333,7 @@ namespace MyBuddyListPro.Data.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("CategoryContact", b =>
