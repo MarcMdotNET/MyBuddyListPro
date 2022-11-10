@@ -21,12 +21,17 @@ namespace MyBuddyListPro.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
+        private readonly IAddressBookService _addressBookService;
 
-        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager, IImageService imageService)
+        public ContactsController(ApplicationDbContext context,
+                                  UserManager<AppUser> userManager,
+                                  IImageService imageService,
+                                  IAddressBookService addressBookService)
         {
             _context = context;
             _userManager = userManager;
             _imageService = imageService;
+            _addressBookService = addressBookService;
         }
 
         // GET: Contacts
@@ -59,10 +64,12 @@ namespace MyBuddyListPro.Controllers
 
         // GET: Contacts/Create
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            string appUserId = _userManager.GetUserId(User);
+
             ViewData["USStatesList"] = new SelectList(Enum.GetValues(typeof(USStates)).Cast<USStates>().ToList());
+            ViewData["CategoryList"] = new MultiSelectList(await _addressBookService.GetUserCategoriesAsync(appUserId), "Id", "Name");
             return View();
         }
 
@@ -90,7 +97,7 @@ namespace MyBuddyListPro.Controllers
                     contact.ImageData = await _imageService.ConvertFileToByteArrayAsync(contact.ImageFile);
                     contact.ImageType = contact.ImageFile.ContentType;
                 }
-                
+
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -187,14 +194,14 @@ namespace MyBuddyListPro.Controllers
             {
                 _context.Contacts.Remove(contact);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContactExists(int id)
         {
-          return _context.Contacts.Any(e => e.Id == id);
+            return _context.Contacts.Any(e => e.Id == id);
         }
     }
 }
