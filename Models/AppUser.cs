@@ -1,6 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+
 namespace MyBuddyListPro.Models
 {
     public class AppUser : IdentityUser
@@ -17,6 +20,12 @@ namespace MyBuddyListPro.Models
 
         [NotMapped]
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
+
+        // Allows a user to include its related contacts.
+        public virtual ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
+
+        // Allows a user to include its related categories.
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
 
     }
 }
