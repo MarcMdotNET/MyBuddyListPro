@@ -36,7 +36,7 @@ namespace MyBuddyListPro.Controllers
 
         // GET: Contacts
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(int categoryId)
         {
 
             var contacts = new List<Contact>();
@@ -50,11 +50,22 @@ namespace MyBuddyListPro.Controllers
 
             var categories = appUser.Categories;
 
-            contacts = appUser.Contacts.OrderBy(c => c.LastName)
-                                       .ThenBy(c => c.FirstName)
-                                       .ToList();
+            if (categoryId == 0)
+            {
+                contacts = appUser.Contacts.OrderBy(c => c.LastName)
+                                           .ThenBy(c => c.FirstName)
+                                           .ToList();
+            }
+            else
+            {
+                contacts = appUser.Categories.FirstOrDefault(c => c.Id == categoryId)
+                                  .Contacts
+                                  .OrderBy(c => c.LastName)
+                                  .ThenBy(c => c.FirstName)
+                                  .ToList();
+            }
 
-            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", categoryId);
 
             return View(contacts);
         }
