@@ -23,7 +23,7 @@ namespace MyBuddyListPro.Services
                     Contact? contact = await _context.Contacts.FindAsync(contactId);
                     Category? category = await _context.Categories.FindAsync(categoryId);
 
-                    if(category != null && contact != null)
+                    if (category != null && contact != null)
                     {
                         category.Contacts.Add(contact);
                         await _context.SaveChangesAsync();
@@ -37,9 +37,19 @@ namespace MyBuddyListPro.Services
             }
         }
 
-        public Task<ICollection<int>> GetContactCategoryIdsAsync(int contactId)
+        public async Task<ICollection<int>> GetContactCategoryIdsAsync(int contactId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var contact = await _context.Contacts.Include(c => c.Categories)
+                                                     .FirstOrDefaultAsync(c => c.Id == contactId);
+                List<int> categoryIds = contact.Categories.Select(c => c.Id).ToList();
+                return categoryIds;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<Category>> GetUserCategoriesAsync(string userId)
@@ -56,7 +66,7 @@ namespace MyBuddyListPro.Services
             {
                 throw;
             }
-            
+
             return categories;
         }
 
