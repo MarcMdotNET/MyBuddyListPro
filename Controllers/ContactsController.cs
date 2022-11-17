@@ -9,10 +9,12 @@ using Microsoft.Extensions.Identity;
 using Microsoft.AspNetCore.Authorization;
 using MyBuddyListPro.Data;
 using MyBuddyListPro.Models;
+using MyBuddyListPro.Models.ViewModels;
 using MyBuddyListPro.Enums;
 using Microsoft.AspNetCore.Identity;
 using MyBuddyListPro.Services.Interfaces;
 using MyBuddyListPro.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace MyBuddyListPro.Controllers
 {
@@ -22,22 +24,27 @@ namespace MyBuddyListPro.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
         private readonly IAddressBookService _addressBookService;
+        private readonly IEmailSender _emailService;
 
         public ContactsController(ApplicationDbContext context,
                                   UserManager<AppUser> userManager,
                                   IImageService imageService,
-                                  IAddressBookService addressBookService)
+                                  IAddressBookService addressBookService,
+                                  IEmailSender emailService)
         {
             _context = context;
             _userManager = userManager;
             _imageService = imageService;
             _addressBookService = addressBookService;
+            _emailService = emailService;
         }
 
         // GET: Contacts
         [Authorize]
-        public IActionResult Index(int categoryId)
+        public IActionResult Index(int categoryId, string swalMessage = null)
         {
+
+            ViewData["SwalMessage"] = swalMessage;
 
             var contacts = new List<Contact>();
             string appUserId = _userManager.GetUserId(User);
@@ -100,6 +107,54 @@ namespace MyBuddyListPro.Controllers
 
             return View(nameof(Index), contacts);
 
+        }
+
+        [Authorize]
+
+        public async Task<IActionResult> EmailContact(int Id)
+        {
+            string appUserId = _userManager.GetUserId(User);
+            Contact contact = await _context.Contacts.Where(c => c.Id == Id && c.AppUserId == appUserId)
+                                                     .FirstOrDefaultAsync();
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            EmailData emailData = new EmailData()
+            {
+                EmailAddress = contact.Email,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName
+            };
+
+            EmailContactViewModel model = new EmailContactViewModel()
+            {
+                Contact = contact,
+                EmailData = emailData
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EmailContact(EmailContactViewModel ecvm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _emailService.SendEmailAsync(ecvm.EmailData.EmailAddress, ecvm.EmailData.Subject, ecvm.EmailData.Body);
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Success: Email Sent!" });
+                }
+                catch
+                {
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Error: Email not sent!" });
+                    throw;
+                }
+            }
+            return View(ecvm);
         }
 
         // GET: Contacts/Details/5
@@ -239,7 +294,7 @@ namespace MyBuddyListPro.Controllers
                     {
                         await _addressBookService.RemoveContactFromCategoryAsync(category.Id, contact.Id);
                     }
-                    
+
                     // Add the selected categories.
                     foreach (int categoryId in CategoryList)
                     {
