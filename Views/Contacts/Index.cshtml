@@ -43,22 +43,20 @@
                         <div class="row g-0">
                             <div class="col-md-4 square-img-container">
                                 <img src='@ImageService.ConvertByteArrayToFile(contact.ImageData!,contact.ImageType!)' class="square-img rounded-start" alt="..." />
-                                <!--This is where I left it!!!-->
-
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
                                     <h5 class="card-title">@Html.DisplayFor(modelItem => contact.FullName)</h5>
                                     <address class="card-text">
-                                        @Html.DisplayNameFor(modelItem => contact.Address1)<br>
-                                        @Html.DisplayNameFor(modelItem => contact.Address2)<br>
-                                        @Html.DisplayNameFor(modelItem => contact.City), @Html.DisplayNameFor(modelItem => contact.USState) @Html.DisplayNameFor(modelItem => contact.ZipCode)
+                                        @Html.DisplayFor(modelItem => contact.Address1)<br>
+                                        @Html.DisplayFor(modelItem => contact.Address2)<br>
+                                        @Html.DisplayFor(modelItem => contact.City), @Html.DisplayFor(modelItem => contact.USState) @Html.DisplayFor(modelItem => contact.ZipCode)
                                     </address>
                                     <div class="card-text">
-                                        <span class="fw-bold me-2">Phone:</span>@Html.DisplayNameFor(modelItem => contact.PhoneNumber)
+                                        <span class="fw-bold me-2">Phone:</span>@Html.DisplayFor(modelItem => contact.PhoneNumber)
                                     </div>
                                     <div class="card-text">
-                                        <span class="fw-bold me-2">Email:</span>@Html.DisplayNameFor(modelItem => contact.Email)
+                                        <span class="fw-bold me-2">Email:</span>@Html.DisplayFor(modelItem => contact.Email)
                                     </div>
                                     <div class="fs-4">
                                         <a class="me-3 editIcons" asp-action="Edit" asp-route-id="@contact.Id"><i class="bi bi-pencil-fill "></i></a>

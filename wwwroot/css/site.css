@@ -7,6 +7,10 @@
     --cf-dark-color: #131313;
     --cf-light-gray: #d9d9d9;
     --cf-light-color: #eeeeee;
+    --cf-social-linkedin-color: #0078b5;
+    --cf-social-github-color: #f0f6fc;
+    --cf-social-twitter-color: #1da1f2;
+    --cf-social-youtube-color: #ff0000;
     --cf-title-font: 'Fira Sans', sans-serif;
     --cf-body-font: 'Roboto', sans-serif;
 }
@@ -158,17 +162,17 @@ main {
 
 .footer {
     flex-shrink: 0;
-    background-color: var(--cf-secondaryColor);
+    background-color: var(--cf-dark-color);
 }
 
 .copyright {
-    color: var(--cf-primaryColorDark);
+    color: var(--cf-primaryColorLight);
     font-size: .9rem;
 }
 
 .socialicons {
-    color: var(--cf-primaryColorDark);
-    opacity: .9;
+    color: var(--cf-secondaryColor);
+    opacity: .75;
     font-size: 2rem;
 }
 
@@ -177,6 +181,31 @@ main {
         opacity: 1;
         cursor: pointer;
     }
+
+    .socialicons.linkedin:hover {
+        color: var(--cf-social-linkedin-color);
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .socialicons.github:hover {
+        color: var(--cf-social-github-color);
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .socialicons.twitter:hover {
+        color: var(--cf-social-twitter-color);
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    .socialicons.youtube:hover {
+        color: var(--cf-social-youtube-color);
+        opacity: 1;
+        cursor: pointer;
+    }
+
 
 .square-img-container {
     position: relative;

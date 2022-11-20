@@ -38,7 +38,9 @@
                             <label asp-for="Input.Code" class="control-label form-label">Verification Code</label>
                             <span asp-validation-for="Input.Code" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="w-100 btn btn-lg btn-primary">Verify</button>
+                        <div class="mt-2">
+                            <button type="submit" class="w-100 btn btn-lg btn-primary">Verify</button>
+                        </div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     </form>
                 </div>
@@ -50,6 +52,6 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
-    <script type="text/javascript" src="~/lib/qrcode.js/qrcode.min.js"></script>
+    <script type="text/javascript" src="~/lib/qrcode/qrcode.min.js"></script>
     <script type="text/javascript" src="~/js/qr.js"></script>
 }

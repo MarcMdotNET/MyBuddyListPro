@@ -34,9 +34,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-md navbar-light fixed-top border-bottom border-light navShadow">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top border-bottom border-dark bg-dark navShadow">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/img/mblpro-logo.svg" height=45></a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/img/mblpro-logo-light.svg" height=45></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                         aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" aria-current="page" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
@@ -73,16 +73,16 @@
             <div class="col">
                 <div class="row align-items-center gy-2">
                     <div class="col d-flex justify-content-center justify-content-md-start order-last order-md-first copyright">
-                        &copy; 2022 Marc Mironescu All Rights Reserved
+                        <span class="text-muted">&copy;2022&nbsp;</span>Marc Mironescu | contact@marcm.pro
                     </div>
                     <div class="col d-flex justify-content-center">
-                        <img src="/img/mblpro-logo.svg" height="50">
+                        <a href="https://marcm.pro" target="_blank"><img src="/img/marcm-pro-logo-light.svg" alt="Marc Mironescu Logo" height="32"></a>
                     </div>
                     <div class="col-12 col-md d-flex justify-content-center justify-content-md-end">
-                        <a href="#" class="socialicons"><i class="bi bi-linkedin p-2 "></i></a>
-                        <a href="#" class="socialicons"><i class="bi bi-twitter p-2"></i></a>
-                        <a href="#" class="socialicons"><i class="bi bi-youtube p-2"></i></a>
-                        <a href="#" class="socialicons"><i class="bi bi-instagram p-2 "></i></a>
+                        <a href="https://www.linkedin.com/in/marcmironescu/" class="socialicons linkedin" target="_blank"><i class="bi bi-linkedin p-2 "></i></a>
+                        <a href="https://github.com/marcm-pro/MyBuddyListPro" class="socialicons github" target="_blank"><i class="bi bi-github p-2"></i></a>
+                        <a href="https://twitter.com/marcmironescu/" class="socialicons twitter" target="_blank"><i class="bi bi-twitter p-2"></i></a>
+                        <a href="https://www.youtube.com/channel/UCl0BS28Coic4KWnatXuLWtQ" class="socialicons youtube" target="_blank"><i class="bi bi-youtube p-2"></i></a>
                     </div>
                 </div>
             </div>
