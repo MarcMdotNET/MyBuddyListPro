@@ -10,8 +10,6 @@ using MyBuddyListPro.Helpers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"]; // For appsettings.json use var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
