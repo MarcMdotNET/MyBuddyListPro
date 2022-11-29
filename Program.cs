@@ -10,14 +10,16 @@ using MyBuddyListPro.Helpers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration);
+//var connectionString = ConnectionHelper.GetConnectionString(builder.Configuration);
+var connectionString = builder.Configuration.GetSection("mysqlSettings")["mysqlConnection"];
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString)); // For SQL use options.UseSqlServer(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))); // For SQL use options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 // Register Custom Services
